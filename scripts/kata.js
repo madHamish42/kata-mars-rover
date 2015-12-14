@@ -8,11 +8,23 @@
 		
 	rover = {
 		direction : 0,
-		forward : function(){
+		f : function(){
 			
 		},
-		backward : function(){
+		b : function(){
 			
+		},
+		r : function(){
+			this.direction += 1;
+			if(this.direction >= directions.length){
+				this.direction = 0;
+			}
+		},
+		l : function(){
+			this.direction -= 1;
+			if(this.direction < 0){
+				this.direction = directions.length - 1;
+			}
 		},
 		setDirection : function(direction){
 			if(directions.indexOf(direction) < 0){
