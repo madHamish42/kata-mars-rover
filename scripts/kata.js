@@ -15,6 +15,9 @@
 			
 		},
 		setDirection : function(direction){
+			if(directions.indexOf(direction) < 0){
+				throw new Error('Direction does not exist: ' + direction);
+			}
 			this.direction = directions.indexOf(direction);
 		}
 	}
