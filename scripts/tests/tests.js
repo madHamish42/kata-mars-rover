@@ -1,16 +1,24 @@
 QUnit.test( "hello test", function( assert ) {
-	assert.ok( 1 == "1", "Passed!" );
+	assert.ok(kata.rover instanceof Object == true, 'Rover object exists');
   
-	assert.ok(kata.rover instanceof Object == true, 'yay');
-  
-	kata.rover.setDirection('s');
+	kata.rover.direction = 'n'
+	assert.equal(kata.rover.direction, 0, 'direction "n" should equal 0');
+	kata.rover.direction = 'e';
+	assert.equal(kata.rover.direction, 1, 'direction "e" should equal 1');
+	kata.rover.direction = 's';
 	assert.equal(kata.rover.direction, 2, 'direction "s" should equal 2');
-	assert.throws(function(){
-			kata.rover.setDirection('t');  
-		},
-	'Trying to set unknown direction provokes error');
+	kata.rover.direction = 'w';
 	
-	kata.rover.setDirection('n');
+	assert.equal(kata.rover.direction, 3, 'direction "w" should equal 3');
+	assert.throws(function(){
+					kata.rover.direction = 't';  
+				  },
+				  'Trying to set unknown direction provokes error');
+				  
+	kata.rover.direction = 'S';
+	assert.equal(kata.rover.direction, 2, 'direction with upper case "S" should equal 2');
+	
+	kata.rover.direction = 'n';
 	kata.rover.r();
 	assert.equal(kata.rover.direction, 1, 'After facing north a turn to the right makes the rover face east (1)');
 	

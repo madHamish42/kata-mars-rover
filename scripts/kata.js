@@ -5,37 +5,46 @@
 		rover,
 		directions = ['n', 'e', 's', 'w'],
 		grid;
+	
+	function createRover(){
+		var direction = 0,
+			Rover = {
+				f : function(){
+					
+				},
+				b : function(){
+					
+				},
+				r : function(){
+					direction += 1;
+					if(direction >= directions.length){
+						direction = 0;
+					}
+				},
+				l : function(){
+					direction -= 1;
+					if(direction < 0){
+						direction = directions.length - 1;
+					}
+				},
+				set direction(newDir){
+					newDir = newDir.toLowerCase();
+					if(directions.indexOf(newDir) < 0){
+						throw new Error('Direction does not exist: ' + newDir);
+					}
+					
+					direction = directions.indexOf(newDir);
+				},
+				get direction(){
+					return direction;
+				}
+			}
 		
-	rover = {
-		direction : 0,
-		f : function(){
-			
-		},
-		b : function(){
-			
-		},
-		r : function(){
-			this.direction += 1;
-			if(this.direction >= directions.length){
-				this.direction = 0;
-			}
-		},
-		l : function(){
-			this.direction -= 1;
-			if(this.direction < 0){
-				this.direction = directions.length - 1;
-			}
-		},
-		setDirection : function(direction){
-			if(directions.indexOf(direction) < 0){
-				throw new Error('Direction does not exist: ' + direction);
-			}
-			this.direction = directions.indexOf(direction);
-		}
+		return Object.create(Rover);
 	}
 	
-	kata.directions = directions;
-	kata.rover = rover;
+	//kata.directions = directions;
+	kata.rover = createRover()	;
 	
 	window.kata = kata;
 }(window, document)
