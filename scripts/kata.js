@@ -37,6 +37,12 @@
 				},
 				get direction(){
 					return this._direction;
+				},
+				set grid(grid){
+					this._grid = grid;
+				},
+				get grid(){
+					return this._grid;
 				}
 			},
 			gridProto = {
@@ -48,6 +54,7 @@
 						   throw new Error('Outside of grid: x=' + x + ', y=' + y);
 					   }
 					
+					movable.grid = this;
 					this._movables.push({movable: movable,
 										x: x,
 										y: y});
@@ -65,6 +72,7 @@
 			
 	function Rover(){
 		this._direction = 0;
+		this._grid;
 	}
 	Rover.prototype = roverProto;
 	

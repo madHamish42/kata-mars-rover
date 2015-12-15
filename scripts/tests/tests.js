@@ -46,5 +46,6 @@ QUnit.test( "hello test", function( assert ) {
 	assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
 	assert.ok(movable.x == 42, 'Movable has correct x coordinate');
 	assert.ok(movable.y == 17, 'Movable has correct y coordinate');
+	assert.ok(movable.movable.grid == grid, 'Movable has reference to correct grid');
 	
 });
