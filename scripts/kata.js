@@ -1,3 +1,6 @@
+//TODO: for later versions:
+//use eg. require.js and put rover and grid in own module
+
 !function(window, document, undefined){
 	'use strict';
 	
