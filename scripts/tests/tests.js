@@ -1,31 +1,50 @@
 QUnit.test( "hello test", function( assert ) {
-	assert.ok(kata.rover instanceof Object == true, 'Rover object exists');
+	var rover = kata.rover,
+		grid = kata.grid;
+		
+	//Rover
+	assert.ok(rover instanceof Object == true, 'Rover object exists');
   
-	kata.rover.direction = 'n'
-	assert.equal(kata.rover.direction, 0, 'direction "n" should equal 0');
-	kata.rover.direction = 'e';
-	assert.equal(kata.rover.direction, 1, 'direction "e" should equal 1');
-	kata.rover.direction = 's';
-	assert.equal(kata.rover.direction, 2, 'direction "s" should equal 2');
-	kata.rover.direction = 'w';
+	rover.direction = 'n'
+	assert.equal(rover.direction, 0, 'direction "n" should equal 0');
+	rover.direction = 'e';
+	assert.equal(rover.direction, 1, 'direction "e" should equal 1');
+	rover.direction = 's';
+	assert.equal(rover.direction, 2, 'direction "s" should equal 2');
+	rover.direction = 'w';
 	
-	assert.equal(kata.rover.direction, 3, 'direction "w" should equal 3');
+	assert.equal(rover.direction, 3, 'direction "w" should equal 3');
 	assert.throws(function(){
-					kata.rover.direction = 't';  
+					rover.direction = 't';  
 				  },
 				  'Trying to set unknown direction provokes error');
 				  
-	kata.rover.direction = 'S';
-	assert.equal(kata.rover.direction, 2, 'direction with upper case "S" should equal 2');
+	rover.direction = 'S';
+	assert.equal(rover.direction, 2, 'direction with upper case "S" should equal 2');
 	
-	kata.rover.direction = 'n';
-	kata.rover.r();
-	assert.equal(kata.rover.direction, 1, 'After facing north a turn to the right makes the rover face east (1)');
+	rover.direction = 'n';
+	rover.r();
+	assert.equal(rover.direction, 1, 'After facing north a turn to the right makes the rover face east (1)');
 	
-	kata.rover.l();
-	kata.rover.l();
-	assert.equal(kata.rover.direction, 3, 'Turning left two times makes it face west (3)');
+	rover.l();
+	rover.l();
+	assert.equal(rover.direction, 3, 'Turning left two times makes it face west (3)');
 	
-	kata.rover.r();
-	assert.equal(kata.rover.direction, 0, 'Turning right again makes it face north (0)');
+	rover.r();
+	assert.equal(rover.direction, 0, 'Turning right again makes it face north (0)');
+	
+	//Grid
+	assert.ok(grid instanceof Object == true, 'Grid object exists');
+	
+	assert.throws(function(){
+				grid.addMovable(rover, 100, 0); 
+			  },
+			  'Trying to add movable to non existing grid position provokes error');
+			  
+	grid.addMovable(rover, 42, 17);
+	var movable = grid.getMovable(rover);
+	assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
+	assert.ok(movable.x == 42, 'Movable has correct x coordinate');
+	assert.ok(movable.y == 17, 'Movable has correct y coordinate');
+	
 });
