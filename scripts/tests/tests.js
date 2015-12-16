@@ -1,4 +1,4 @@
-QUnit.test( "hello test", function( assert ) {
+QUnit.test( "rover test", function( assert ) {
 	var rover = kata.rover,
 		grid = kata.grid;
 		
@@ -42,10 +42,10 @@ QUnit.test( "hello test", function( assert ) {
 			  'Trying to add movable to non existing grid position provokes error');
 			  
 	grid.addMovable(rover, 42, 17);
-	var movable = grid.getMovable(rover);
-	assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
-	assert.ok(movable.x == 42, 'Movable has correct x coordinate');
-	assert.ok(movable.y == 17, 'Movable has correct y coordinate');
-	assert.ok(movable.movable.grid == grid, 'Movable has reference to correct grid');
+	var coordinates = grid.getCoordinates(rover);
+	//assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
+	assert.ok(coordinates.x == 42, 'Correct x coordinate');
+	assert.ok(coordinates.y == 17, 'Correct y coordinate');
+	//assert.ok(movable.movable.grid == grid, 'Movable has reference to correct grid');
 	
 });

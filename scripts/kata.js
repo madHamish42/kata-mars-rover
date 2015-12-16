@@ -9,66 +9,67 @@
 		directions = ['n', 'e', 's', 'w'],
 		grid,
 		roverProto = {
-				f: function(){
-					
-				},
-				b: function(){
-					
-				},
-				r: function(){
-					this._direction+= 1;
-					if(this._direction>= directions.length){
-						this._direction= 0;
-					}
-				},
-				l: function(){
-					this._direction-= 1;
-					if(this._direction< 0){
-						this._direction= directions.length - 1;
-					}
-				},
-				set direction(newDir){
-					newDir = newDir.toLowerCase();
-					if(directions.indexOf(newDir) < 0){
-						throw new Error('Direction does not exist: ' + newDir);
-					}
-					
-					this._direction= directions.indexOf(newDir);
-				},
-				get direction(){
-					return this._direction;
-				},
-				set grid(grid){
-					this._grid = grid;
-				},
-				get grid(){
-					return this._grid;
+			f: function(){
+				
+			},
+			b: function(){
+				
+			},
+			r: function(){
+				this._direction+= 1;
+				if(this._direction>= directions.length){
+					this._direction= 0;
 				}
 			},
-			gridProto = {
-				addMovable: function(movable, x, y){
-					if (x > this._width - 1 ||
-					   x < 0 ||
-					   y > this._height - 1 ||
-					   y < 0){
-						   throw new Error('Outside of grid: x=' + x + ', y=' + y);
-					   }
-					
-					movable.grid = this;
-					this._movables.push({movable: movable,
-										x: x,
-										y: y});
-				},
-				getMovable: function(movable){
-					var movables = this._movables;
-					
-					for(var i = 0; i < movables.length; i++){
-						if(movables[i].movable == movable){
-							return movables[i];
-						}
+			l: function(){
+				this._direction-= 1;
+				if(this._direction< 0){
+					this._direction= directions.length - 1;
+				}
+			},
+			set direction(newDir){
+				newDir = newDir.toLowerCase();
+				if(directions.indexOf(newDir) < 0){
+					throw new Error('Direction does not exist: ' + newDir);
+				}
+				
+				this._direction= directions.indexOf(newDir);
+			},
+			get direction(){
+				return this._direction;
+			},
+			set grid(grid){
+				this._grid = grid;
+			},
+			get grid(){
+				return this._grid;
+			}
+		},
+		gridProto = {
+			addMovable: function(movable, x, y){
+				//TODO: prevent multiple adds of same movable
+				if (x > this._width - 1 ||
+				   x < 0 ||
+				   y > this._height - 1 ||
+				   y < 0){
+					   throw new Error('Outside of grid: x=' + x + ', y=' + y);
+				   }
+				
+				movable.grid = this;
+				this._movables.push({movable: movable,
+									 coordinates: {x: x,
+												   y: y}});
+			},
+			getCoordinates: function(movable){
+				var movables = this._movables;
+				
+				for(var i = 0; i < movables.length; i++){
+					if(movables[i].movable == movable){
+						return movables[i].coordinates;
 					}
 				}
 			}
+		};
 			
 	function Rover(){
 		this._direction = 0;
