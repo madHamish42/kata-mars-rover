@@ -35,11 +35,6 @@ QUnit.test( "rover test", function( assert ) {
 	
 	//Grid
 	assert.ok(grid instanceof Object == true, 'Grid object exists');
-	
-	assert.throws(function(){
-				grid.addMovable(rover, 100, 0); 
-			  },
-			  'Trying to add movable to non existing grid position provokes error');
 			  
 	grid.positionMovable(rover, 42, 17);
 	var coordinates = grid.getCoordinates(rover);
