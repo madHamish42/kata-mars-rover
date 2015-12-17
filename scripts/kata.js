@@ -10,10 +10,10 @@
 		grid,
 		roverProto = {
 			f: function(){
-				
+				this.grid.move(this, 'f');
 			},
 			b: function(){
-				
+				this.grid.move(this, 'b');
 			},
 			r: function(){
 				this._direction+= 1;
@@ -47,18 +47,21 @@
 		},
 		gridProto = {
 			positionMovable: function(movable, x, y){
-				//check if movable already positioned -> relocate
-				if (x > this._width - 1 ||
-				   x < 0 ||
-				   y > this._height - 1 ||
-				   y < 0){
-					   throw new Error('Outside of grid: x=' + x + ', y=' + y);
-				   }
+				var coordinates = this.getCoordinates(movable);
 				
-				movable.grid = this;
-				this._movables.push({movable: movable,
-									 coordinates: {x: x,
-												   y: y}});
+				if(coordinates){
+					//Reposition existing movable
+					coordinates.x = x;
+					coordinates.y = y;
+				}else{
+					//Add new movable
+					coordinates = {x: x, y: y};
+					movable.grid = this;
+					this._movables.push({movable: movable,
+										 coordinates: coordinates});
+				}
+
+				this.sanitizeCoordinates(coordinates);
 			},
 			getCoordinates: function(movable){
 				var movables = this._movables;
@@ -69,11 +72,11 @@
 					}
 				}
 			},
-			sanitizeCoordinates(coordinates){
+			sanitizeCoordinates: function(coordinates){
 				coordinates.x = this.sanitizeCoordinate(coordinates.x, this._width);
 				coordinates.y = this.sanitizeCoordinate(coordinates.y, this._height);
 			},
-			sanitizeCoordinate(coordinate, limit){
+			sanitizeCoordinate: function(coordinate, limit){
 				var mod;
 				
 				if(coordinate < 0){
@@ -87,6 +90,9 @@
 				}
 				
 				return coordinate;
+			},
+			move: function(movable, direction){
+				
 			}
 		};
 			

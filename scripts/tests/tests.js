@@ -43,11 +43,15 @@ QUnit.test( "rover test", function( assert ) {
 			  
 	grid.positionMovable(rover, 42, 17);
 	var coordinates = grid.getCoordinates(rover);
-	//assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
-	assert.ok(coordinates.x == 42, 'Correct x coordinate');
-	assert.ok(coordinates.y == 17, 'Correct y coordinate');
-	//assert.ok(movable.movable.grid == grid, 'Movable has reference to correct grid');
+	assert.equal(coordinates.x, 42, 'Correct x coordinate');
+	assert.equal(coordinates.y, 17, 'Correct y coordinate');
 	
+	grid.positionMovable(rover, 85, 12);
+	assert.equal(coordinates.x, 85, 'Correct x coordinate');
+	assert.equal(coordinates.y, 12, 'Correct y coordinate');
+	
+	assert.equal(grid._movables.length, 1, 'After repositioning the rover the number of movables on the grid is the same');
+
 	coordinates = {x: -200, y: -200};
 	grid.sanitizeCoordinates(coordinates);
 	assert.equal(coordinates.x, 0, 'correct x coordinate');
