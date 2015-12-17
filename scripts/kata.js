@@ -1,5 +1,8 @@
 //TODO: for later versions:
-//use eg. require.js and put rover and grid in own module
+//- use eg. require.js and put rover and grid in own module
+//- put rover's facing direction, turning of the rover and the directions array in grid
+//  rover: does not need to know about directions, can defer turning to grid (analogue to f and b)
+//  directions array: different grids may have different possible directions
 
 !function(window, document, undefined){
 	'use strict';
