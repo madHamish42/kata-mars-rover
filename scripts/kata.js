@@ -112,6 +112,7 @@
 	Rover.prototype = roverProto;
 	
 	function Grid(width, height){
+		//TODO: Test grid with non default height and width
 		this._width = width || 100;
 		this._height = height || 100;
 		this._movables = [];
