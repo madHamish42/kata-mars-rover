@@ -10,6 +10,8 @@
 		grid,
 		roverProto = {
 			f: function(){
+				//TODO: currently the grid ref gets set by the grid when positioning the rover
+				//throw error: no grid?
 				this.grid.move(this, 'f');
 			},
 			b: function(){
