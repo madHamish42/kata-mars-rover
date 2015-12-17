@@ -80,19 +80,27 @@
 				var mod;
 				
 				if(coordinate < 0){
-					//arbitrary negative number range -1...-limit
-					//coordinate - (Math.trunc(coordinate / limit) * limit);
 					mod = coordinate % limit;
-					//map negative number to corresponding grid position
-					coordinate = mod == 0 ? 0 : mod + limit;
+					coordinate = (mod == 0) ? 0 : mod + limit; //mod -100 etc resolves to 0. Do not add limit
 				}else{
 					coordinate = coordinate % limit;
 				}
 				
 				return coordinate;
 			},
-			move: function(movable, direction){
+			move: function(movable, moveDirection){
+				var coordinates = this.getCoordinates(movable),
+					faceDirection = movable.direction,
+					axis = (faceDirection == 0 || faceDirection == 2) ? 'y' : 'x', //north and south = y axis
+					change = (faceDirection > 1) ? -1 : 1; //facing south or west equals negative movement
+					
+				if(moveDirection == 'b'){
+					change = -change;
+				}
 				
+				coordinates[axis] = coordinates[axis] + change;
+				
+				this.sanitizeCoordinates(coordinates);
 			}
 		};
 			

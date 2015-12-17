@@ -52,6 +52,7 @@ QUnit.test( "rover test", function( assert ) {
 	
 	assert.equal(grid._movables.length, 1, 'After repositioning the rover the number of movables on the grid is the same');
 
+	//test sanitize coordinates
 	coordinates = {x: -200, y: -200};
 	grid.sanitizeCoordinates(coordinates);
 	assert.equal(coordinates.x, 0, 'correct x coordinate');
@@ -67,6 +68,11 @@ QUnit.test( "rover test", function( assert ) {
 	assert.equal(coordinates.x, 0, 'correct x coordinate');
 	assert.equal(coordinates.y, 1, 'correct y coordinate');
 	
+	coordinates = {x: 99, y: 99};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 99, 'correct x coordinate');
+	assert.equal(coordinates.y, 99, 'correct y coordinate');
+	
 	coordinates = {x: 357, y: 523};
 	grid.sanitizeCoordinates(coordinates);
 	assert.equal(coordinates.x, 57, 'correct x coordinate');
@@ -75,6 +81,36 @@ QUnit.test( "rover test", function( assert ) {
 	coordinates = {x: -1, y: -1};
 	grid.sanitizeCoordinates(coordinates);
 	assert.equal(coordinates.x, 99, 'correct x coordinate');
-	assert.equal(coordinates.y, 99, 'correct y coordinate');	
+	assert.equal(coordinates.y, 99, 'correct y coordinate');
 	
+	//Test moving
+	grid.positionMovable(rover, 0, 0);
+	rover.f();
+	coordinates = grid.getCoordinates(rover);
+	assert.equal(coordinates.x, 0, 'correct x coordinate');
+	assert.equal(coordinates.y, 1, 'correct y coordinate');
+	
+	grid.positionMovable(rover, 0, 0);
+	rover.f();
+	coordinates = grid.getCoordinates(rover);
+	assert.equal(coordinates.x, 0, 'correct x coordinate');
+	assert.equal(coordinates.y, 1, 'correct y coordinate');
+	
+	grid.positionMovable(rover, 0, 0);
+	rover.l();
+	rover.f();
+	coordinates = grid.getCoordinates(rover);
+	assert.equal(coordinates.x, 99, 'correct x coordinate');
+	assert.equal(coordinates.y, 0, 'correct y coordinate');
+
+	rover.l();
+	rover.f();
+	coordinates = grid.getCoordinates(rover);
+	assert.equal(coordinates.x, 99, 'correct x coordinate');
+	assert.equal(coordinates.y, 99, 'correct y coordinate');
+	
+	rover.b();
+	coordinates = grid.getCoordinates(rover);
+	assert.equal(coordinates.x, 99, 'correct x coordinate');
+	assert.equal(coordinates.y, 0, 'correct y coordinate');
 });
