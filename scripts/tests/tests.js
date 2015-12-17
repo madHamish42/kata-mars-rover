@@ -41,11 +41,36 @@ QUnit.test( "rover test", function( assert ) {
 			  },
 			  'Trying to add movable to non existing grid position provokes error');
 			  
-	grid.addMovable(rover, 42, 17);
+	grid.positionMovable(rover, 42, 17);
 	var coordinates = grid.getCoordinates(rover);
 	//assert.ok(movable.movable == rover, 'Movable has reference to correct rover object');
 	assert.ok(coordinates.x == 42, 'Correct x coordinate');
 	assert.ok(coordinates.y == 17, 'Correct y coordinate');
 	//assert.ok(movable.movable.grid == grid, 'Movable has reference to correct grid');
+	
+	coordinates = {x: -200, y: -200};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 0, 'correct x coordinate');
+	assert.equal(coordinates.y, 0, 'correct y coordinate');
+	
+	coordinates = {x: -357, y: -523};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 43, 'correct x coordinate');
+	assert.equal(coordinates.y, 77, 'correct y coordinate');
+	
+	coordinates = {x: 100, y: 101};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 0, 'correct x coordinate');
+	assert.equal(coordinates.y, 1, 'correct y coordinate');
+	
+	coordinates = {x: 357, y: 523};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 57, 'correct x coordinate');
+	assert.equal(coordinates.y, 23, 'correct y coordinate');
+	
+	coordinates = {x: -1, y: -1};
+	grid.sanitizeCoordinates(coordinates);
+	assert.equal(coordinates.x, 99, 'correct x coordinate');
+	assert.equal(coordinates.y, 99, 'correct y coordinate');	
 	
 });

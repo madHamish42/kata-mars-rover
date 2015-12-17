@@ -46,8 +46,8 @@
 			}
 		},
 		gridProto = {
-			addMovable: function(movable, x, y){
-				//TODO: prevent multiple adds of same movable
+			positionMovable: function(movable, x, y){
+				//check if movable already positioned -> relocate
 				if (x > this._width - 1 ||
 				   x < 0 ||
 				   y > this._height - 1 ||
@@ -68,6 +68,25 @@
 						return movables[i].coordinates;
 					}
 				}
+			},
+			sanitizeCoordinates(coordinates){
+				coordinates.x = this.sanitizeCoordinate(coordinates.x, this._width);
+				coordinates.y = this.sanitizeCoordinate(coordinates.y, this._height);
+			},
+			sanitizeCoordinate(coordinate, limit){
+				var mod;
+				
+				if(coordinate < 0){
+					//arbitrary negative number range -1...-limit
+					//coordinate - (Math.trunc(coordinate / limit) * limit);
+					mod = coordinate % limit;
+					//map negative number to corresponding grid position
+					coordinate = mod == 0 ? 0 : mod + limit;
+				}else{
+					coordinate = coordinate % limit;
+				}
+				
+				return coordinate;
 			}
 		};
 			
